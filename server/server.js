@@ -5,8 +5,20 @@ const path = require("path");
 const cookieSession = require("cookie-session");
 const { SESSION_SECRET } = require("./secrets.json");
 
-const { getUserById, createUser } = require("./db");
+const { s3Upload } = require("./s3");
+const { uploader } = require("./uploader");
+const {
+    getUserById,
+    createUser,
+    getUserByEmail,
+    login,
+    generateCode,
+    getCode,
+    newPassword,
+    updateUserProfilePicture,
+} = require("./db");
 
+app.use(express.static(path.join(__dirname, "..", "client", "public")));
 app.use(compression());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -25,13 +37,16 @@ app.get("/api/users/me", (request, response) => {
         return;
     }
     getUserById(request.session.user_id).then((user) => {
+        // console.log("user_id", user_id);
         response.json(user);
     });
 });
 
 app.post("/api/users", (request, response) => {
-    createUser(request.body)
+    console.log("POST register", request.body);
+    createUser({ ...request.body })
         .then((newUser) => {
+            console.log("nu", newUser);
             request.session.user_id = newUser.id;
             response.json(newUser);
         })
@@ -44,7 +59,84 @@ app.post("/api/users", (request, response) => {
         });
 });
 
-app.use(express.static(path.join(__dirname, "..", "client", "public")));
+// #2 login
+
+app.post("/api/login", (request, response) => {
+    login(request.body)
+        .then((user) => {
+            if (!user) {
+                response.status(401).json({ error: "invalid authentication" });
+                return;
+            }
+            request.session.user_id = user.id;
+            response.json(user);
+        })
+        .catch((error) => {
+            console.log("login POST", error);
+            response.status(500).json({ error: "Oops, something went wrong!" });
+        });
+});
+
+// #3
+
+// app.post("/password/reset/start", (request, response) => {
+//     getUserByEmail(request.body).then((user) => {
+//         if (!user) {
+//             response.status(401).json({ error: "not registered" });
+//             return;
+//         }
+//         generateCode(user.email, code)
+//             .then((result) => {
+//                 response.json(result);
+//             })
+//             .catch((error) => {
+//                 console.log("error by generating", error);
+//                 response
+//                     .status(500)
+//                     .json({ error: "Oops, somethign went wrong" });
+//             });
+//     });
+// });
+
+// app.post("/password/reset/verify", (request, response) => {
+//     getUserByEmail(request.body).then((user) => {
+//         if (!user) {
+//             response.status(401).json({ error: "not registered" });
+//             return;
+//         }
+//         getCode(user.email).then((resetCode) => {
+//             if (!resetCode) {
+//                 response.status(401).json({ error: "wrong code" });
+//                 return;
+//             }
+//         });
+//     });
+// });
+
+// #4
+
+app.post(
+    "/api/users/profile",
+    uploader.single("file"),
+    s3Upload,
+    (request, response) => {
+        const url = `https://s3.amazonaws.com/spicedling/${request.file.filename}`;
+
+        updateUserProfilePicture({
+            user_id: request.session.user_id,
+            profile_picture_url: url,
+        })
+            .then((result) => {
+                response.json(result);
+            })
+            .catch((error) => {
+                console.log("pic upload post", error);
+                response
+                    .status(500)
+                    .json({ message: "couldn't upload the image" });
+            });
+    }
+);
 
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));

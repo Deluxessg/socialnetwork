@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class RegisterForm extends Component {
     constructor(props) {
@@ -7,7 +8,7 @@ export default class RegisterForm extends Component {
     }
     onFormSubmit(event) {
         event.preventDefault();
-
+        // console.log("debug1");
         const formData = {
             first_name: event.target.first_name.value,
             last_name: event.target.last_name.value,
@@ -18,7 +19,7 @@ export default class RegisterForm extends Component {
             method: "POST",
             body: JSON.stringify(formData),
             headers: {
-                "Content-Type": "application=json",
+                "Content-Type": "application/json",
             },
         })
             .then((response) => response.json)
@@ -31,34 +32,37 @@ export default class RegisterForm extends Component {
     }
     render() {
         return (
-            <form onSubmit={this.onFormSubmit}>
-                <input
-                    name="first_name"
-                    type="text"
-                    required
-                    placeholder="first name"
-                ></input>
-                <input
-                    name="last_name"
-                    type="text"
-                    required
-                    placeholder="last name"
-                ></input>
-                <input
-                    name="email"
-                    type="email"
-                    required
-                    placeholder="email"
-                ></input>
-                <input
-                    name="password"
-                    type="password"
-                    required
-                    placeholder="passwork"
-                ></input>
+            <div>
+                <form onSubmit={this.onFormSubmit}>
+                    <input
+                        name="first_name"
+                        type="text"
+                        required
+                        placeholder="first name"
+                    ></input>
+                    <input
+                        name="last_name"
+                        type="text"
+                        required
+                        placeholder="last name"
+                    ></input>
+                    <input
+                        name="email"
+                        type="email"
+                        required
+                        placeholder="email"
+                    ></input>
+                    <input
+                        name="password"
+                        type="password"
+                        required
+                        placeholder="passwork"
+                    ></input>
 
-                <button>Register</button>
-            </form>
+                    <button>Register</button>
+                </form>
+                <Link to="/login">Click here to Log in!</Link>
+            </div>
         );
     }
 }
