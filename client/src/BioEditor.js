@@ -12,8 +12,8 @@ export default class Bio extends Component {
         this.submitBio = this.submitBio.bind(this);
     }
 
-    updateDefaultBio(event) {
-        this.setState({ defaultBio: event.target.value });
+    updateDefaultBio(newBio) {
+        this.setState({ defaultBio: newBio });
     }
 
     toggleEditor() {
@@ -23,19 +23,21 @@ export default class Bio extends Component {
         console.log("this toggle state", this.state.showTextArea);
     }
 
-    submitBio() {
+    submitBio(event) {
+        const newBio = event.target.bio.value;
         fetch("/api/bio", {
             method: "POST",
             body: JSON.stringify({
-                bio: this.state.defaultBio,
+                bio: newBio,
             }),
             headers: { "Content-Type": "application/json" },
         })
             .then((response) => response.json())
             .then((data) => {
-                this.props.update(data.bio);
+                console.log("data at data", data);
+                this.props.updateBio(data.bio);
             })
-            .catch((error) => console.log("submitBIO", error));
+            .catch((error) => console.log("submitBIO we are here now", error));
 
         this.setState({
             showTextArea: false,
@@ -43,6 +45,7 @@ export default class Bio extends Component {
     }
 
     render() {
+        console.log("propseditor", this.props);
         return (
             <div>
                 {this.props.user.bio && (
@@ -56,7 +59,11 @@ export default class Bio extends Component {
                 )}
                 {this.state.showTextArea && (
                     <form onSubmit={this.submitBio}>
-                        <textarea onInput={this.updateDefaultBio}></textarea>
+                        <textarea
+                            name="bio"
+                            defaultValue={this.props.user.bio}
+                            onInput={this.updateDefaultBio}
+                        ></textarea>
                         <button>Submit</button>
                     </form>
                 )}

@@ -142,9 +142,11 @@ app.post(
 // #5
 
 app.post("/api/bio", (request, response) => {
+    console.log("reqbody", request.body);
+    const { bio } = request.body;
     updateBio({
         id: request.session.user_id,
-        ...request.body,
+        bio: bio,
     })
         .then((bio) => {
             response.json(bio);

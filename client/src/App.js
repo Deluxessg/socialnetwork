@@ -14,6 +14,7 @@ export default class App extends Component {
         this.onButtonClick = this.onButtonClick.bind(this);
         this.uploadClose = this.uploadClose.bind(this);
         this.uploadPicture = this.uploadPicture.bind(this);
+        this.updateBio = this.updateBio.bind(this);
     }
     componentDidMount() {
         fetch("api/users/me")
@@ -40,7 +41,7 @@ export default class App extends Component {
         });
     }
 
-    update(bio) {
+    updateBio(bio) {
         this.setState({
             user: { ...this.state.user, bio: bio },
         });
@@ -62,7 +63,10 @@ export default class App extends Component {
                     />
                 )}
                 <div>
-                    <Profile user={this.state.user} setBio={this.setBio} />
+                    <Profile
+                        user={this.state.user}
+                        updateBio={this.updateBio}
+                    />
                 </div>
             </div>
         );
