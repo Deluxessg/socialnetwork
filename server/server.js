@@ -16,6 +16,7 @@ const {
     getCode,
     newPassword,
     updateUserProfilePicture,
+    updateBio,
 } = require("./db");
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
@@ -137,6 +138,22 @@ app.post(
             });
     }
 );
+
+// #5
+
+app.post("/api/bio", (request, response) => {
+    updateBio({
+        id: request.session.user_id,
+        ...request.body,
+    })
+        .then((bio) => {
+            response.json(bio);
+        })
+        .catch((error) => {
+            console.log("bio error", error);
+            response.statusCode(500).json({ error: "error by bio" });
+        });
+});
 
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));

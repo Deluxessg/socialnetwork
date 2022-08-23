@@ -1,6 +1,7 @@
 import { Component } from "react";
 import ProfilePicture from "./ProfilePicture";
 import PictureModal from "./PictureModal";
+import Profile from "./Profile";
 
 export default class App extends Component {
     constructor(props) {
@@ -39,6 +40,12 @@ export default class App extends Component {
         });
     }
 
+    update(bio) {
+        this.setState({
+            user: { ...this.state.user, bio: bio },
+        });
+    }
+
     render() {
         return (
             <div className="app">
@@ -54,6 +61,9 @@ export default class App extends Component {
                         uploadClose={this.uploadClose}
                     />
                 )}
+                <div>
+                    <Profile user={this.state.user} setBio={this.setBio} />
+                </div>
             </div>
         );
     }
