@@ -10,13 +10,11 @@ const { uploader } = require("./uploader");
 const {
     getUserById,
     createUser,
-    getUserByEmail,
     login,
-    generateCode,
-    getCode,
-    newPassword,
     updateUserProfilePicture,
     updateBio,
+    getRecentUsers,
+    searchUsers,
 } = require("./db");
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
@@ -156,6 +154,42 @@ app.post("/api/bio", (request, response) => {
             response.statusCode(500).json({ error: "error by bio" });
         });
 });
+
+// #6
+
+app.get("/api/users/recent", (request, response) => {
+    getRecentUsers(request.query).then((users) => {
+        response.json(users);
+    });
+});
+
+// app.get("/api/users/recent", (request, response) => {
+//     console.log("REQUSRID", request.session.user_id);
+//     getRecentUsers(request.session.user_id).then((users) => {
+//         console.log("USERS NEW", users);
+//         response.json(users);
+//     });
+// });
+
+// app.get("/api/users/search", async (request, response) => {
+//     const searchResults = await searchUsers(request.query);
+//     response.json(searchResults);
+// });
+
+app.get("/api/users/search", async (request, response) => {
+    const searchResults = await searchUsers(request.query);
+    response.json(
+        searchResults.filter((user) => user.id !== request.session.user_id)
+    );
+});
+
+// app.get("/api/users/search", (request, response)=>{
+//     if(!request.session.user_id){
+//         response.json(null)
+//         return;
+//     }
+//     searchUsers(request.query).then((user))
+// })
 
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));

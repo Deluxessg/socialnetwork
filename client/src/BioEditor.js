@@ -20,7 +20,7 @@ export default class Bio extends Component {
         this.setState({
             showTextArea: !this.state.showTextArea,
         });
-        console.log("this toggle state", this.state.showTextArea);
+        // console.log("this toggle state", this.state.showTextArea);
     }
 
     submitBio(event) {
@@ -34,7 +34,7 @@ export default class Bio extends Component {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log("data at data", data);
+                // console.log("data at data", data);
                 this.props.updateBio(data.bio);
             })
             .catch((error) => console.log("submitBIO we are here now", error));
@@ -45,7 +45,7 @@ export default class Bio extends Component {
     }
 
     render() {
-        console.log("propseditor", this.props);
+        // console.log("propseditor", this.props);
         return (
             <div className="bioeditor">
                 {this.props.user.bio && (

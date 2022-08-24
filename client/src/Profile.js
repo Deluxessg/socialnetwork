@@ -2,7 +2,7 @@ import ProfilePicture from "./ProfilePicture";
 import Bio from "./BioEditor";
 
 export default function Profile(props) {
-    console.log("propsinprofile", props);
+    // console.log("propsinprofile", props);
     return (
         <div className="profile-container">
             <h2>Your profile</h2>

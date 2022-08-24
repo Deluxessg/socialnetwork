@@ -1,8 +1,9 @@
 import { Component } from "react";
 import ProfilePicture from "./ProfilePicture";
 import PictureModal from "./PictureModal";
+import FindPeople from "./FindPeople";
 import Profile from "./Profile";
-import { BrowserRouter, Route, Link, NavLink } from "react-router-dom";
+import { BrowserRouter, Route, NavLink } from "react-router-dom";
 
 export default class App extends Component {
     constructor(props) {
@@ -53,9 +54,10 @@ export default class App extends Component {
             <BrowserRouter>
                 <div className="app">
                     <header>
-                        <div className="header-a">
-                            <NavLink to="/">Home</NavLink>
-                        </div>
+                        <nav className="header-a">
+                            <NavLink to="/">Home </NavLink>
+                            <NavLink to="/people"> Find People</NavLink>
+                        </nav>
                         <h1>Hello!!</h1>
 
                         <ProfilePicture
@@ -64,23 +66,28 @@ export default class App extends Component {
                                 this.state.user.profile_picture_url
                             }
                         />
-                    </header>
-                    {this.state.showModal && (
-                        <PictureModal
-                            uploadPicture={this.uploadPicture}
-                            uploadClose={this.uploadClose}
-                        />
-                    )}
-                    <div>
-                        <Route path="/" exact>
-                            <Profile
-                                user={this.state.user}
-                                updateBio={this.updateBio}
+                        {this.state.showModal && (
+                            <PictureModal
+                                uploadPicture={this.uploadPicture}
+                                uploadClose={this.uploadClose}
                             />
+                        )}
+                    </header>
+                    <section>
+                        <Route path="/" exact>
+                            <div>
+                                <Profile
+                                    user={this.state.user}
+                                    updateBio={this.updateBio}
+                                />
+                            </div>
                         </Route>
-                    </div>
-                    <footer> &copy Sausage inc.</footer>
+                        <Route path="/people">
+                            <FindPeople />
+                        </Route>
+                    </section>
                 </div>
+                <footer> Crucial Footer</footer>
             </BrowserRouter>
         );
     }
