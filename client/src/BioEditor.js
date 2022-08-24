@@ -47,7 +47,7 @@ export default class Bio extends Component {
     render() {
         console.log("propseditor", this.props);
         return (
-            <div>
+            <div className="bioeditor">
                 {this.props.user.bio && (
                     <div>
                         <p>{this.props.user.bio}</p>

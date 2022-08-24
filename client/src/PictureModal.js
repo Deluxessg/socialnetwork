@@ -17,7 +17,7 @@ export default function PictureModal({ uploadClose, uploadPicture }) {
             });
     }
     return (
-        <div>
+        <div className="picture-modal">
             <button onClick={uploadClose}>X</button>
             <form onSubmit={onSubmit}>
                 <input

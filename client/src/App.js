@@ -50,12 +50,16 @@ export default class App extends Component {
     render() {
         return (
             <div className="app">
-                <h1>Hello!!</h1>
-                <ProfilePicture
-                    onButtonClick={this.onButtonClick}
-                    profile_picture_url={this.state.user.profile_picture_url}
-                />
-                <button onClick={this.onButtonClick}>SHOWME</button>
+                <div className="app-top">
+                    <h1>Hello!!</h1>
+                    <ProfilePicture
+                        onButtonClick={this.onButtonClick}
+                        profile_picture_url={
+                            this.state.user.profile_picture_url
+                        }
+                    />
+                    <button onClick={this.onButtonClick}>SHOWME</button>
+                </div>
                 {this.state.showModal && (
                     <PictureModal
                         uploadPicture={this.uploadPicture}
