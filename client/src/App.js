@@ -2,6 +2,7 @@ import { Component } from "react";
 import ProfilePicture from "./ProfilePicture";
 import PictureModal from "./PictureModal";
 import Profile from "./Profile";
+import { BrowserRouter, Route, Link, NavLink } from "react-router-dom";
 
 export default class App extends Component {
     constructor(props) {
@@ -49,30 +50,38 @@ export default class App extends Component {
 
     render() {
         return (
-            <div className="app">
-                <div className="app-top">
-                    <h1>Hello!!</h1>
-                    <ProfilePicture
-                        onButtonClick={this.onButtonClick}
-                        profile_picture_url={
-                            this.state.user.profile_picture_url
-                        }
-                    />
-                    <button onClick={this.onButtonClick}>SHOWME</button>
+            <BrowserRouter>
+                <div className="app">
+                    <header>
+                        <div className="header-a">
+                            <NavLink to="/">Home</NavLink>
+                        </div>
+                        <h1>Hello!!</h1>
+
+                        <ProfilePicture
+                            onButtonClick={this.onButtonClick}
+                            profile_picture_url={
+                                this.state.user.profile_picture_url
+                            }
+                        />
+                    </header>
+                    {this.state.showModal && (
+                        <PictureModal
+                            uploadPicture={this.uploadPicture}
+                            uploadClose={this.uploadClose}
+                        />
+                    )}
+                    <div>
+                        <Route path="/" exact>
+                            <Profile
+                                user={this.state.user}
+                                updateBio={this.updateBio}
+                            />
+                        </Route>
+                    </div>
+                    <footer> &copy Sausage inc.</footer>
                 </div>
-                {this.state.showModal && (
-                    <PictureModal
-                        uploadPicture={this.uploadPicture}
-                        uploadClose={this.uploadClose}
-                    />
-                )}
-                <div>
-                    <Profile
-                        user={this.state.user}
-                        updateBio={this.updateBio}
-                    />
-                </div>
-            </div>
+            </BrowserRouter>
         );
     }
 }

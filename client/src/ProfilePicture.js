@@ -1,9 +1,11 @@
-export default function ProfilePicture({ profile_picture_url }) {
+export default function ProfilePicture({ profile_picture_url, onButtonClick }) {
     return (
-        <img
-            className="profile-pic"
-            src={profile_picture_url}
-            alt="profile_picture"
-        />
+        <div onClick={onButtonClick}>
+            <img
+                className="profile-pic"
+                src={profile_picture_url}
+                alt="profile_picture"
+            />
+        </div>
     );
 }

@@ -50,7 +50,7 @@ export default class Bio extends Component {
             <div className="bioeditor">
                 {this.props.user.bio && (
                     <div>
-                        <p>{this.props.user.bio}</p>
+                        <p className="bio-text">{this.props.user.bio}</p>
                         <button onClick={this.toggleEditor}>Edit</button>
                     </div>
                 )}

@@ -17,17 +17,19 @@ export default function PictureModal({ uploadClose, uploadPicture }) {
             });
     }
     return (
-        <div className="picture-modal">
-            <button onClick={uploadClose}>X</button>
-            <form onSubmit={onSubmit}>
-                <input
-                    name="file"
-                    type="file"
-                    accept="image/*"
-                    required
-                ></input>
-                <button>Upload</button>
-            </form>
+        <div className="modal-container">
+            <div className="picture-modal">
+                <button onClick={uploadClose}>X</button>
+                <form onSubmit={onSubmit}>
+                    <input
+                        name="file"
+                        type="file"
+                        accept="image/*"
+                        required
+                    ></input>
+                    <button>Upload</button>
+                </form>
+            </div>
         </div>
     );
 }

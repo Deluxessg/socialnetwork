@@ -11,8 +11,8 @@ export default function Profile(props) {
                     profile_picture_url={props.user.profile_picture_url}
                 />
                 <div>
-                    <p>{props.user.first_name}</p>
-                    <p>{props.user.last_name}</p>
+                    <h3>{props.user.first_name}</h3>
+                    <h3>{props.user.last_name}</h3>
                     <Bio updateBio={props.updateBio} user={props.user} />
                 </div>
             </div>

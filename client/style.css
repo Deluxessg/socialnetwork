@@ -15,20 +15,48 @@ img {
     flex-direction: column;
 }
 
-.app-top {
+header {
+    position: relative;
     display: flex;
     border: 5px blue solid;
-    justify-content: space-between;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.header-a {
+    background-color: rgb(52, 165, 42);
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
 }
 
 .picture-modal {
     border: 5px yellow solid;
+    height: 40%;
+    width: 70%;
 }
 
 .bioeditor {
     border: 5px black solid;
 }
 
+.bio-text {
+    border: 1px green solid;
+    width: 30%;
+}
+
 .profile-container {
     border: 5px white solid;
+}
+
+.modal-container {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.651);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
