@@ -191,6 +191,12 @@ app.get("/api/users/search", async (request, response) => {
 //     searchUsers(request.query).then((user))
 // })
 
+app.get("/api/users/:user_id", (request, response) => {
+    getUserById(request.params.user_id).then((user) => {
+        response.json(user);
+    });
+});
+
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });

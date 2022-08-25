@@ -4,6 +4,7 @@ import PictureModal from "./PictureModal";
 import FindPeople from "./FindPeople";
 import Profile from "./Profile";
 import { BrowserRouter, Route, NavLink } from "react-router-dom";
+import OtherProfile from "./OtherProfile";
 
 export default class App extends Component {
     constructor(props) {
@@ -84,6 +85,9 @@ export default class App extends Component {
                         </Route>
                         <Route path="/people">
                             <FindPeople />
+                        </Route>
+                        <Route path="/users/:user_id">
+                            <OtherProfile />
                         </Route>
                     </section>
                 </div>

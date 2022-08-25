@@ -37,8 +37,10 @@ export default function FindPeople() {
                 <ul>
                     {recentUsers.map((user) => (
                         <li key={user.id}>
-                            {user.first_name} {user.last_name}
-                            <img src={user.profile_picture_url}></img>
+                            <a href={"/users/" + user.id}>
+                                {user.first_name} {user.last_name}
+                                <img src={user.profile_picture_url}></img>
+                            </a>
                         </li>
                     ))}
                 </ul>
