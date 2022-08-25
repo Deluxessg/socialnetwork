@@ -15,6 +15,7 @@ const {
     updateBio,
     getRecentUsers,
     searchUsers,
+    friendshipCheck,
 } = require("./db");
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
@@ -195,6 +196,20 @@ app.get("/api/users/:user_id", (request, response) => {
     getUserById(request.params.user_id).then((user) => {
         response.json(user);
     });
+});
+
+app.get("/api/friendship-status/:otheruserid", (request, response) => {
+    friendshipCheck(request.session.user_id, request.params.id)
+        .then((result) => {
+            if (result.rows[0]) {
+                response.json(result.rows[0]);
+            } else {
+                response.json({ friendship: false });
+            }
+        })
+        .catch((error) => {
+            console.log("error by checking FS status", error);
+        });
 });
 
 app.get("*", function (req, res) {

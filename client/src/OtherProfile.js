@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
+import FriendshipButton from "./FriendshipButton";
 
 export default function OtherProfile() {
     const { user_id } = useParams();
     const [user, setUser] = useState({});
     const history = useHistory();
+    const { otherUserId } = useParams();
 
     useEffect(() => {
         fetch("/api/users/" + user_id)
@@ -27,6 +29,7 @@ export default function OtherProfile() {
                     {user.first_name} {user.last_name}
                 </h4>
                 <p>{user.bio}</p>
+                <FriendshipButton otherUserId={otherUserId} />
             </div>
         </div>
     );
