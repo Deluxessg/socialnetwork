@@ -5,9 +5,9 @@ import FriendshipButton from "./FriendshipButton";
 
 export default function OtherProfile() {
     const { user_id } = useParams();
+    console.log("USERIDPARAMS", user_id);
     const [user, setUser] = useState({});
     const history = useHistory();
-    const { otherUserId } = useParams();
 
     useEffect(() => {
         fetch("/api/users/" + user_id)
@@ -29,7 +29,7 @@ export default function OtherProfile() {
                     {user.first_name} {user.last_name}
                 </h4>
                 <p>{user.bio}</p>
-                <FriendshipButton otherUserId={otherUserId} />
+                <FriendshipButton otherUserId={user_id} />
             </div>
         </div>
     );

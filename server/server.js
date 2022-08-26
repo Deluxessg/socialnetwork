@@ -16,6 +16,9 @@ const {
     getRecentUsers,
     searchUsers,
     friendshipCheck,
+    requestFriendship,
+    acceptFriendship,
+    deleteFriendship,
 } = require("./db");
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
@@ -192,6 +195,8 @@ app.get("/api/users/search", async (request, response) => {
 //     searchUsers(request.query).then((user))
 // })
 
+// #7
+
 app.get("/api/users/:user_id", (request, response) => {
     getUserById(request.params.user_id).then((user) => {
         response.json(user);
@@ -210,6 +215,27 @@ app.get("/api/friendship-status/:otheruserid", (request, response) => {
         .catch((error) => {
             console.log("error by checking FS status", error);
         });
+});
+
+app.post("/api/request-friend/:otheruserid", (request, response) => {
+    requestFriendship(request.session.user_id, request.params.id).then(() => {
+        console.log("REQUEST FRIEND");
+        response.json("Cancel Request");
+    });
+});
+
+app.post("/api/accept-friend/:otheruserid", (request, response) => {
+    acceptFriendship(request.session.user_id, request.params.id).then(() => {
+        console.log("ACCEPT FRIEND");
+        response.json("Delete Friendship");
+    });
+});
+
+app.post("/api/delete-friend/:otheruserid", (request, response) => {
+    deleteFriendship(request.session.user_id, request.params.id).then(() => {
+        console.log("FRIEND IS DELETED");
+        response.json("Send Request");
+    });
 });
 
 app.get("*", function (req, res) {

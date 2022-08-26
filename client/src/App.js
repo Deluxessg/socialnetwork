@@ -20,7 +20,7 @@ export default class App extends Component {
         this.updateBio = this.updateBio.bind(this);
     }
     componentDidMount() {
-        fetch("api/users/me")
+        fetch("/api/users/me")
             .then((result) => result.json())
             .then((data) => {
                 this.setState({ user: data });

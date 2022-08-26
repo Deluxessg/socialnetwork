@@ -156,6 +156,39 @@ function friendshipCheck(id, otherUserId) {
     );
 }
 
+function requestFriendship(id, otherUserId) {
+    return db.query(
+        `
+        INSERT INTO friendships (sender_id, recipient_id)
+        VALUES ($1, $2)
+        RETURNING *
+    `,
+        [id, otherUserId]
+    );
+}
+
+function acceptFriendship(id, otherUserId) {
+    return db.query(
+        `
+        UPDATE friendships
+        SET accepted = true
+        WHERE (recipient_id = $1 AND sender_id = $2)
+    `,
+        [id, otherUserId]
+    );
+}
+
+function deleteFriendship(id, otherUserId) {
+    return db.query(
+        `
+        DELETE FROM friendship
+        WHERE (recipient_id = $1 AND sender_id = $2)
+        OR (recipient_id = $2 AND sender_id = $1)
+    `,
+        [id, otherUserId]
+    );
+}
+
 module.exports = {
     getUserById,
     createUser,
@@ -169,4 +202,7 @@ module.exports = {
     getRecentUsers,
     searchUsers,
     friendshipCheck,
+    requestFriendship,
+    acceptFriendship,
+    deleteFriendship,
 };
