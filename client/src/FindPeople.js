@@ -9,7 +9,7 @@ export default function FindPeople() {
         fetch("api/users/recent")
             .then((response) => response.json())
             .then((data) => {
-                console.log("DATA in FP", data);
+                // console.log("DATA in FP", data);
                 setRecentUsers(data);
             });
     }, []);

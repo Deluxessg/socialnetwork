@@ -204,12 +204,23 @@ app.get("/api/users/:user_id", (request, response) => {
 });
 
 app.get("/api/friendship-status/:otheruserid", (request, response) => {
-    friendshipCheck(request.session.user_id, request.params.id)
-        .then((result) => {
-            if (result.rows[0]) {
-                response.json(result.rows[0]);
-            } else {
-                response.json({ friendship: false });
+    friendshipCheck(request.session.user_id, request.params.otheruserid)
+        .then((friendship) => {
+            if (!friendship) {
+                response.json("Send Request");
+                return;
+            }
+            if (friendship.accepted) {
+                response.json("Cancel Request");
+                return;
+            }
+            if (friendship.sender_id === request.session.user_id) {
+                response.json("Cancel Request");
+                return;
+            }
+            if (friendship.recipient_id === request.session.user_id) {
+                response.json("Accept Request");
+                return;
             }
         })
         .catch((error) => {
@@ -218,24 +229,30 @@ app.get("/api/friendship-status/:otheruserid", (request, response) => {
 });
 
 app.post("/api/request-friend/:otheruserid", (request, response) => {
-    requestFriendship(request.session.user_id, request.params.id).then(() => {
-        console.log("REQUEST FRIEND");
-        response.json("Cancel Request");
-    });
+    requestFriendship(request.session.user_id, request.params.otheruserid).then(
+        () => {
+            console.log("REQUEST FRIEND");
+            response.json("Cancel Request");
+        }
+    );
 });
 
 app.post("/api/accept-friend/:otheruserid", (request, response) => {
-    acceptFriendship(request.session.user_id, request.params.id).then(() => {
-        console.log("ACCEPT FRIEND");
-        response.json("Delete Friendship");
-    });
+    acceptFriendship(request.session.user_id, request.params.otheruserid).then(
+        () => {
+            console.log("ACCEPT FRIEND");
+            response.json("Delete Friendship");
+        }
+    );
 });
 
 app.post("/api/delete-friend/:otheruserid", (request, response) => {
-    deleteFriendship(request.session.user_id, request.params.id).then(() => {
-        console.log("FRIEND IS DELETED");
-        response.json("Send Request");
-    });
+    deleteFriendship(request.session.user_id, request.params.otheruserid).then(
+        () => {
+            console.log("FRIEND IS DELETED");
+            response.json("Send Request");
+        }
+    );
 });
 
 app.get("*", function (req, res) {

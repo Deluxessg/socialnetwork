@@ -5,7 +5,7 @@ import FriendshipButton from "./FriendshipButton";
 
 export default function OtherProfile() {
     const { user_id } = useParams();
-    console.log("USERIDPARAMS", user_id);
+    // console.log("USERIDPARAMS", user_id);
     const [user, setUser] = useState({});
     const history = useHistory();
 

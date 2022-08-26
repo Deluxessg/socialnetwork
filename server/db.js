@@ -146,47 +146,55 @@ function searchUsers({ q }) {
 }
 
 function friendshipCheck(id, otherUserId) {
-    return db.query(
-        `
+    return db
+        .query(
+            `
         SELECT * FROM friendships
         WHERE (recipient_id = $1 AND sender_id = $2)
         OR (recipient_id = $2 AND sender_id = $1)
     `,
-        [id, otherUserId]
-    );
+            [id, otherUserId]
+        )
+        .then((result) => result.rows[0]);
 }
 
 function requestFriendship(id, otherUserId) {
-    return db.query(
-        `
+    return db
+        .query(
+            `
         INSERT INTO friendships (sender_id, recipient_id)
         VALUES ($1, $2)
         RETURNING *
     `,
-        [id, otherUserId]
-    );
+            [id, otherUserId]
+        )
+        .then((result) => result.rows[0]);
 }
 
 function acceptFriendship(id, otherUserId) {
-    return db.query(
-        `
+    return db
+        .query(
+            `
         UPDATE friendships
         SET accepted = true
         WHERE (recipient_id = $1 AND sender_id = $2)
     `,
-        [id, otherUserId]
-    );
+            [id, otherUserId]
+        )
+        .then((result) => result.rows[0]);
 }
 
 function deleteFriendship(id, otherUserId) {
-    return db.query(
-        `
-        DELETE FROM friendship
+    return db
+        .query(
+            `
+        DELETE FROM friendships
         WHERE (recipient_id = $1 AND sender_id = $2)
         OR (recipient_id = $2 AND sender_id = $1)
     `,
-        [id, otherUserId]
-    );
+            [id, otherUserId]
+        )
+        .then((result) => result.rows[0]);
 }
 
 module.exports = {
