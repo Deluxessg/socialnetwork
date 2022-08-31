@@ -19,6 +19,7 @@ const {
     requestFriendship,
     acceptFriendship,
     deleteFriendship,
+    getFriendships,
 } = require("./db");
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
@@ -253,6 +254,18 @@ app.post("/api/delete-friend/:otheruserid", (request, response) => {
             response.json("Send Request");
         }
     );
+});
+
+// #8
+
+app.get("/api/friendships", (request, response) => {
+    getFriendships(request.session.user_id)
+        .then((result) => {
+            response.json(result);
+        })
+        .catch((error) => {
+            console.log("error at getfrndshps", error);
+        });
 });
 
 app.get("*", function (req, res) {
