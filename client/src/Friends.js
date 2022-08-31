@@ -19,12 +19,7 @@ export default function Friends() {
             );
             setFriendships(newFriends);
             fetch(`/api/friendships/${friendship.user_id}`, {
-                method: "POST",
-                body: JSON.stringify({
-                    buttonText: "Delete Friendship",
-                    recipient_id: friendship.friendship_id,
-                }),
-                headers: { "Content-Type": "application/json" },
+                method: "DELETE",
             });
         } else {
             const newFriends = friendships.map((f) => {
@@ -36,14 +31,7 @@ export default function Friends() {
             setFriendships(newFriends);
 
             fetch(`/api/friendships/${friendship.user_id}`, {
-                method: "POST",
-                body: JSON.stringify({
-                    buttonText: "Accept Request",
-                    recipient_id: friendship.friendship_id,
-                }),
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                method: "PUT",
             });
         }
     }

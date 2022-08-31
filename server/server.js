@@ -238,7 +238,7 @@ app.post("/api/request-friend/:otheruserid", (request, response) => {
     );
 });
 
-app.post("/api/accept-friend/:otheruserid", (request, response) => {
+app.put("/api/friendships/:otheruserid", (request, response) => {
     acceptFriendship(request.session.user_id, request.params.otheruserid).then(
         () => {
             console.log("ACCEPT FRIEND");
@@ -247,7 +247,7 @@ app.post("/api/accept-friend/:otheruserid", (request, response) => {
     );
 });
 
-app.post("/api/delete-friend/:otheruserid", (request, response) => {
+app.delete("/api/friendships/:otheruserid", (request, response) => {
     deleteFriendship(request.session.user_id, request.params.otheruserid).then(
         () => {
             console.log("FRIEND IS DELETED");

@@ -96,7 +96,7 @@ export default class App extends Component {
                         </Route>
                     </section>
                 </div>
-                <footer> Crucial Footer</footer>
+                <footer>&copy; Crucial Footer</footer>
             </BrowserRouter>
         );
     }
