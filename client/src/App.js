@@ -6,6 +6,7 @@ import Profile from "./Profile";
 import { BrowserRouter, Route, NavLink } from "react-router-dom";
 import OtherProfile from "./OtherProfile";
 import Friends from "./Friends";
+import Chat from "./Chat";
 
 export default class App extends Component {
     constructor(props) {
@@ -60,6 +61,7 @@ export default class App extends Component {
                             <NavLink to="/">Home </NavLink>
                             <NavLink to="/people"> Find People</NavLink>
                             <NavLink to="/friends">Friends</NavLink>
+                            <NavLink to="/chat">Chat</NavLink>
                         </nav>
                         <h1>Hello!!</h1>
 
@@ -93,6 +95,9 @@ export default class App extends Component {
                         </Route>
                         <Route path="/friends">
                             <Friends />
+                        </Route>
+                        <Route path="/chat">
+                            <Chat />
                         </Route>
                     </section>
                 </div>

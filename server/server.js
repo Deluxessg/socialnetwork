@@ -4,6 +4,8 @@ const compression = require("compression");
 const path = require("path");
 const cookieSession = require("cookie-session");
 const { SESSION_SECRET } = require("./secrets.json");
+const { Server } = require("http");
+const socketConnect = require("socket.io");
 
 const { s3Upload } = require("./s3");
 const { uploader } = require("./uploader");
@@ -20,18 +22,25 @@ const {
     acceptFriendship,
     deleteFriendship,
     getFriendships,
+    getRecentChatMessages,
+    saveChatMessage,
+    deleteFriendships,
+    deleteMessages,
+    deleteUser,
 } = require("./db");
+
+const cookieSessionMiddleware = cookieSession({
+    secret: SESSION_SECRET,
+    maxAge: 1000 * 60 * 60 * 24 * 90,
+});
+
+const server = Server(app);
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 app.use(compression());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(
-    cookieSession({
-        secret: SESSION_SECRET,
-        maxAge: 1000 * 60 * 60 * 24 * 14,
-    })
-);
+app.use(cookieSessionMiddleware);
 
 // #1
 
@@ -268,10 +277,74 @@ app.get("/api/friendships", (request, response) => {
         });
 });
 
+// #9
+
+const io = socketConnect(server, {
+    allowRequest: (request, callback) =>
+        callback(
+            null,
+            request.headers.referer.startsWith(`http://localhost:3000`)
+        ),
+});
+
+io.use((socket, next) => {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
+
+io.on("connection", async (socket) => {
+    console.log("[social:socket] incoming socked connection", socket.id);
+    const { user_id } = socket.request.session;
+    console.log("SOCKETSESSION", socket.request.session);
+    if (!user_id) {
+        return socket.disconnect(true);
+    }
+    const lastMessages = await getRecentChatMessages();
+    socket.emit("recentMessages", lastMessages.reverse());
+
+    socket.on("message", async (text) => {
+        console.log("USRID", user_id);
+        const newMessage = await saveChatMessage({
+            user_id: user_id,
+            message: text,
+        });
+        console.log("NEWMESSAGE", newMessage);
+        const sender = await getUserById(newMessage.sender_id);
+
+        io.emit("broadcastMessages", {
+            ...newMessage,
+            ...sender,
+            message_id: newMessage.id,
+        });
+    });
+});
+
+// #10
+
+app.post("/api/delete-account", async (request, response) => {
+    const { user_id } = request.session;
+
+    try {
+        await deleteMessages(user_id);
+        await deleteFriendships(user_id);
+        await deleteUser(user_id);
+
+        response.json({ message: "It was great to have you" });
+    } catch (error) {
+        console.log("ERROR by delete", error);
+        response
+            .status(500)
+            .json({ message: "Deleting the account wasn't succesful" });
+    }
+});
+
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
 
-app.listen(process.env.PORT || 3001, function () {
+io.use((socket, next) => {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
+
+server.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening.");
 });

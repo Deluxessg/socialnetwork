@@ -222,6 +222,73 @@ function getFriendships(user_id) {
         .then((result) => result.rows);
 }
 
+function getRecentChatMessages(limit = 10) {
+    return db
+        .query(
+            `
+        SELECT chat_messages.id, chat_messages.sender_id, chat_messages.message,
+        chat_messages.created_at,
+        users.first_name, users.last_name, users.profile_picture_url, users.id AS user_id
+        FROM chat_messages
+        JOIN users ON sender_id = users.id
+        ORDER BY chat_messages.created_at DESC
+        LIMIT $1
+    `,
+            [limit]
+        )
+        .then((result) => result.rows);
+}
+
+function saveChatMessage({ user_id, message }) {
+    console.log("senderID, msgid", user_id, message);
+    return db
+        .query(
+            `
+        INSERT INTO chat_messages (sender_id, message)
+        VALUES ($1, $2)
+        RETURNING *
+    `,
+            [user_id, message]
+        )
+        .then((result) => result.rows[0]);
+}
+
+function deleteUser(user_id) {
+    return db
+        .query(
+            `
+        DELETE FROM users
+        WHERE id = $1
+    `,
+            [user_id]
+        )
+        .then((result) => result.rows[0]);
+}
+
+function deleteFriendships(user_id) {
+    return db
+        .query(
+            `
+        DELETE FROM friendships
+        WHERE sender_id = $1 OR recipient_id = $1
+    `,
+            [user_id]
+        )
+        .then((result) => result.rows[0]);
+}
+
+function deleteMessages(user_id) {
+    return db
+        .query(
+            `
+        DELETE FROM chat_messages
+        WHERE sender_id = $1
+    `,
+            [user_id]
+        )
+        .then((result) => result.rows[0]);
+}
+
 module.exports = {
     getUserById,
     createUser,
@@ -239,4 +306,9 @@ module.exports = {
     acceptFriendship,
     deleteFriendship,
     getFriendships,
+    getRecentChatMessages,
+    saveChatMessage,
+    deleteUser,
+    deleteFriendships,
+    deleteMessages,
 };
