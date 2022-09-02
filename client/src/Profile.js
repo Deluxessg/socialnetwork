@@ -7,11 +7,12 @@ export default function Profile(props) {
     function deleteAccount() {
         fetch("/api/delete-account", {
             method: "POST",
-        }).then((response) => {
-            if (response.ok) {
-                window.location("/");
-            }
-        });
+        })
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result);
+                window.location = "/";
+            });
     }
 
     return (

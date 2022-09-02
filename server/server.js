@@ -328,6 +328,8 @@ app.post("/api/delete-account", async (request, response) => {
         await deleteFriendships(user_id);
         await deleteUser(user_id);
 
+        request.session = null;
+
         response.json({ message: "It was great to have you" });
     } catch (error) {
         console.log("ERROR by delete", error);
