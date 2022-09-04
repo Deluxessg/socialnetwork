@@ -49,7 +49,7 @@ export default function Friends() {
                 <FriendList friendships={incoming} onClick={onClick} />
             </section>
             <section>
-                <h3>Current Requests</h3>
+                <h3>Current Friends</h3>
                 <FriendList friendships={accepted} onClick={onClick} />
             </section>
         </section>

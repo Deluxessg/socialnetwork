@@ -1,12 +1,18 @@
 import RegisterForm from "./RegisterForm";
 import LoginForm from "./login";
+// import LOGO from "./logo/logo.png";
 
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 
 export default function Welcome() {
     return (
         <div className="welcome">
-            <h1>Welcome to the social network!</h1>
+            <div className="welcome-text">
+                <h1>Welcome to the Coding Community!</h1>
+            </div>
+            <div className="logo">
+                <img src="/media/logo2.png" />
+            </div>
 
             <BrowserRouter>
                 <Route exact path="/">
@@ -18,7 +24,6 @@ export default function Welcome() {
                 <Route path="/login">
                     <div>
                         <LoginForm />
-                        <Link to="=reset">Reset Password</Link>
                     </div>
                 </Route>
             </BrowserRouter>

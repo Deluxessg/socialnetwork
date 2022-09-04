@@ -1,16 +1,30 @@
 body {
-    background-color: rgb(16, 241, 241);
     /* display: flex; */
     /* flex-wrap: wrap; */
+    height: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background: linear-gradient(
+        to bottom right,
+        #845ec2,
+        #d65db1,
+        #ff6f91,
+        #ff9671,
+        #ffc75f,
+        #f9f871
+    );
 }
 
 img {
     width: 150px;
     height: 150px;
+    border-radius: 10px;
 }
 
 .app {
-    border: 5px red solid;
+    /* border: 5px red solid; */
     display: flex;
     flex-direction: column;
 }
@@ -18,37 +32,183 @@ img {
 header {
     position: relative;
     display: flex;
-    border: 5px blue solid;
+    /* border: 5px blue solid; */
     justify-content: flex-end;
+    /* justify-content: space-between; */
     gap: 1rem;
 }
 
+.header-logo {
+    width: 100px;
+    height: 100px;
+}
+
+.header-logo-div {
+    padding-right: 10%;
+}
+
 .header-a {
-    background-color: rgb(52, 165, 42);
+    display: flex;
+    justify-content: space-between;
+    /* background-color: rgb(52, 165, 42); */
     position: absolute;
-    left: 1rem;
+    left: 0.56em;
     top: 1rem;
+    /* padding: 1rem; */
+    /* margin: 1rem; */
+}
+
+.logout-btn {
+    width: 150px;
+    height: 30px;
+    border-radius: 999px;
+    background-color: #d65d77;
+    font-size: 1rem;
+    text-decoration: solid;
+    color: #f9f871;
+}
+
+.logout-btn:hover {
+    color: #f6fa03;
+    box-shadow: -1px -1px 5px rgba(255, 255, 176, 0.8),
+        1px 1px 5px rgba(41, 9, 31, 0.3),
+        inset -2px -2px 5px rgba(255, 255, 187, 0.8),
+        inset 2px 2px 5px rgba(20, 9, 17, 0.3);
+}
+
+a {
     padding: 1rem;
-    margin: 1rem;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #f9f871;
+}
+
+.home {
+    background-color: #f9f871;
+    border-radius: 50px;
+    padding: 0.5rem;
+}
+
+.home:hover {
+    background-color: #d65d77;
+    color: #f9f871;
+    border: 1px solid #f9f871;
 }
 
 .picture-modal {
-    border: 5px yellow solid;
+    border: 1px #f9f871 solid;
+    border-radius: 20px;
     height: 40%;
     width: 70%;
+    background-color: #d65db1;
+}
+
+.input-warp input[type="file"] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.modal-input {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    border: 2px solid #f9f871;
+    color: #f9f871;
+    background-color: #ff9671;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.modal-input:hover {
+    color: #f6fa03;
+    box-shadow: -1px -1px 5px rgba(255, 255, 176, 0.8),
+        1px 1px 5px rgba(41, 9, 31, 0.3),
+        inset -2px -2px 5px rgba(255, 255, 187, 0.8),
+        inset 2px 2px 5px rgba(20, 9, 17, 0.3);
 }
 
 .bioeditor {
-    border: 5px black solid;
+    /* border: 5px black solid; */
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+}
+
+.bio-btn {
+    width: 100px;
+    background-color: #d65d77;
+    font-size: 1rem;
+    text-decoration: solid;
+    color: #f9f871;
+    border-radius: 20px;
+}
+
+.bio-btn:hover {
+    color: #f6fa03;
+    box-shadow: -1px -1px 5px rgba(255, 255, 176, 0.8),
+        1px 1px 5px rgba(41, 9, 31, 0.3),
+        inset -2px -2px 5px rgba(255, 255, 187, 0.8),
+        inset 2px 2px 5px rgba(20, 9, 17, 0.3);
 }
 
 .bio-text {
-    border: 1px green solid;
-    width: 30%;
+    /* border: 1px green solid; */
+    width: 100%;
+    font-size: 1.25rem;
 }
 
 .profile-container {
-    border: 5px white solid;
+    display: flex;
+    /* border: 5px white solid; */
+}
+
+textarea {
+    border-radius: 10px;
+    width: 300px;
+    height: 75px;
+}
+
+.delete-btn {
+    height: 40px;
+    width: 150px;
+    align-self: flex-end;
+    border-radius: 999px;
+    background-color: #d65d77;
+    font-size: 1rem;
+    text-decoration: solid;
+    color: #f9f871;
+}
+
+.delete-btn:hover {
+    color: #f6fa03;
+    box-shadow: -1px -1px 5px rgba(255, 255, 176, 0.8),
+        1px 1px 5px rgba(41, 9, 31, 0.3),
+        inset -2px -2px 5px rgba(255, 255, 187, 0.8),
+        inset 2px 2px 5px rgba(20, 9, 17, 0.3);
+}
+
+.div-bio {
+    width: 100vh;
+    padding-top: 4rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-img {
+    height: 500px;
+}
+
+.profile-name {
+    padding: 3rem;
 }
 
 .modal-container {
@@ -61,4 +221,198 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    width: 200px;
+    /* position: absolute; */
+}
+
+html {
+    height: 100%;
+}
+
+.welcome {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* border: 1px solid black; */
+}
+
+.welcome-text {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: aqua;
+
+    /* position: absolute; */
+}
+
+.register-form {
+    /* position: absolute; */
+    display: flex;
+    /* position: absolute; */
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column-reverse;
+    border: 1px solid black;
+    padding: 1rem;
+}
+
+input {
+    height: 50px;
+    width: 400px;
+    display: flex;
+    padding: 1rem;
+    margin: 2rem;
+    /* border-radius: 35px; */
+    outline: 0;
+    border-width: 0 0 3px;
+    border-color: rgb(0, 225, 255);
+    background-color: transparent;
+    font-size: 24px;
+    color: aqua;
+}
+
+::placeholder {
+    color: aqua;
+    opacity: 0.4;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    border-width: 0 0 3px;
+    border-color: rgb(38, 182, 248);
+    background-color: transparent;
+    font-size: 24px;
+    color: aqua;
+
+    -webkit-text-fill-color: aqua;
+    transition: 5000s ease-in-out 0s;
+}
+
+.reg-button {
+    font-size: 2rem;
+    width: 500px;
+    height: 60px;
+    background: #ff9671;
+    color: aqua;
+    border-radius: 2000px;
+    box-shadow: -5px -5px 10px rgba(255, 241, 159, 0.8),
+        5px 5px 10px rgba(70, 22, 55, 0.3);
+    border: 2px solid #845ec2;
+}
+
+.reg-button:hover {
+    color: #845ec2;
+    box-shadow: -1px -1px 5px rgba(255, 255, 176, 0.8),
+        1px 1px 5px rgba(41, 9, 31, 0.3),
+        inset -2px -2px 5px rgba(255, 255, 187, 0.8),
+        inset 2px 2px 5px rgba(20, 9, 17, 0.3);
+}
+
+.reg-link {
+    width: 100%;
+    position: relative;
+    padding-top: 3rem;
+    padding-left: 10rem;
+    font-size: 24px;
+    color: aqua;
+}
+
+.login-btn {
+    font-size: 2rem;
+    width: 500px;
+    height: 60px;
+    background: #ff9671;
+    color: aqua;
+    border-radius: 2000px;
+    box-shadow: -5px -5px 10px rgba(255, 241, 159, 0.8),
+        5px 5px 10px rgba(70, 22, 55, 0.3);
+    border: 2px solid #845ec2;
+}
+
+.login-btn:hover {
+    color: #845ec2;
+    box-shadow: -1px -1px 5px rgba(255, 255, 176, 0.8),
+        1px 1px 5px rgba(41, 9, 31, 0.3),
+        inset -2px -2px 5px rgba(255, 255, 187, 0.8),
+        inset 2px 2px 5px rgba(20, 9, 17, 0.3);
+}
+
+.chat-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 1111px;
+}
+
+.chat {
+    height: 500px;
+}
+
+li {
+    list-style: none;
+}
+
+.people-text {
+    font-size: 24px;
+}
+
+.find-people {
+    display: flex;
+}
+
+.search-results {
+    padding-left: 2rem;
+}
+
+.padding-h3 {
+    margin-left: 2rem;
+}
+
+.people-img {
+    height: 100px;
+    width: 100px;
+}
+
+button {
+    width: 150px;
+    background-color: #d65d77;
+    font-size: 0.9rem;
+    text-decoration: solid;
+    color: #f9f871;
+    border-radius: 20px;
+}
+
+button:hover {
+    color: #f6fa03;
+    box-shadow: -1px -1px 5px rgba(255, 255, 176, 0.8),
+        1px 1px 5px rgba(41, 9, 31, 0.3),
+        inset -2px -2px 5px rgba(255, 255, 187, 0.8),
+        inset 2px 2px 5px rgba(20, 9, 17, 0.3);
+}
+
+.other-profile {
+    display: flex;
+    padding: 1rem;
+    justify-content: space-between;
+}
+
+footer {
+    position: absolute;
+    padding-bottom: 0;
 }

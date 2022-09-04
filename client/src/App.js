@@ -52,31 +52,65 @@ export default class App extends Component {
         });
     }
 
+    logout() {
+        console.log("logoutbutton clicked");
+        fetch("/api/logout", {
+            method: "POST",
+        })
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result);
+                window.location = "/";
+            });
+    }
+
     render() {
         return (
             <BrowserRouter>
                 <div className="app">
                     <header>
-                        <nav className="header-a">
-                            <NavLink to="/">Home </NavLink>
-                            <NavLink to="/people"> Find People</NavLink>
-                            <NavLink to="/friends">Friends</NavLink>
-                            <NavLink to="/chat">Chat</NavLink>
-                        </nav>
-                        <h1>Hello!!</h1>
-
-                        <ProfilePicture
-                            onButtonClick={this.onButtonClick}
-                            profile_picture_url={
-                                this.state.user.profile_picture_url
-                            }
-                        />
-                        {this.state.showModal && (
-                            <PictureModal
-                                uploadPicture={this.uploadPicture}
-                                uploadClose={this.uploadClose}
+                        <div className="header-logo-div">
+                            <img
+                                className="header-logo"
+                                src="/media/logo2.png"
                             />
-                        )}
+                        </div>
+                        <div className="header-a">
+                            <div className="home">
+                                <NavLink to="/">Home </NavLink>
+                            </div>
+                            <div className="home">
+                                <NavLink to="/people"> Find People</NavLink>
+                            </div>
+                            <div className="home">
+                                <NavLink to="/friends">Friends</NavLink>
+                            </div>
+                            <div className="home">
+                                <NavLink to="/chat">Chat</NavLink>
+                            </div>
+                        </div>
+                        <h2>{this.state.user.first_name}</h2>
+                        <h2>{this.state.user.last_name}</h2>
+                        <div>
+                            <ProfilePicture
+                                onButtonClick={this.onButtonClick}
+                                profile_picture_url={
+                                    this.state.user.profile_picture_url
+                                }
+                            />
+                            {this.state.showModal && (
+                                <PictureModal
+                                    uploadPicture={this.uploadPicture}
+                                    uploadClose={this.uploadClose}
+                                />
+                            )}
+                            <button
+                                className="logout-btn"
+                                onClick={this.logout}
+                            >
+                                Logout
+                            </button>
+                        </div>
                     </header>
                     <section>
                         <Route path="/" exact>

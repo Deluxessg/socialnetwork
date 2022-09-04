@@ -24,6 +24,7 @@ export default class RegisterForm extends Component {
         })
             .then((response) => response.json)
             .then((data) => {
+                console.log(data);
                 window.location.href = "/";
             })
             .catch((error) =>
@@ -32,7 +33,7 @@ export default class RegisterForm extends Component {
     }
     render() {
         return (
-            <div>
+            <div className="register-from">
                 <form onSubmit={this.onFormSubmit}>
                     <input
                         name="first_name"
@@ -58,10 +59,15 @@ export default class RegisterForm extends Component {
                         required
                         placeholder="passwork"
                     ></input>
-
-                    <button>Register</button>
+                    <div>
+                        <button className="reg-button">Register</button>
+                    </div>
+                    <div className="reg-link">
+                        <Link className="register-link" to="/login">
+                            Click here to Log in!
+                        </Link>
+                    </div>
                 </form>
-                <Link to="/login">Click here to Log in!</Link>
             </div>
         );
     }

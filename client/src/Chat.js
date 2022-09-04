@@ -13,6 +13,11 @@ const connect = () => {
 
 const disconnect = () => (socket = null);
 
+function formatDate(timestamp) {
+    const date = new Date(timestamp);
+    return `${date.toLocaleDateString()} - ${date.toLocaleTimeString()}`;
+}
+
 export default function Chat() {
     const lastMessageRef = useRef(null);
     const [chatMessages, setChatMessages] = useState([]);
@@ -42,6 +47,14 @@ export default function Chat() {
         };
     }, []);
 
+    useEffect(() => {
+        if (!lastMessageRef.current) {
+            return;
+        }
+
+        lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+    }, [chatMessages]);
+
     function onSubmit(event) {
         event.preventDefault();
         const socket = connect();
@@ -55,8 +68,11 @@ export default function Chat() {
             <ul className="messages">
                 {chatMessages.map((x) => (
                     <li ref={lastMessageRef} key={x.id}>
-                        <img src={x.profile_picture_url} />
-                        {x.first_name} {x.last_name} {x.created_at}
+                        <img className="chat-img" src={x.profile_picture_url} />
+                        <strong>{x.first_name}</strong>
+                        {"  "}
+                        <strong>{x.last_name} </strong>
+                        {formatDate(x.created_at)}
                         <p>{x.message}</p>
                     </li>
                 ))}
@@ -68,7 +84,7 @@ export default function Chat() {
                     placeholder="Write your message..."
                     required
                 ></textarea>
-                <button>Send</button>
+                <button className="bio-btn">Send</button>
             </form>
         </section>
     );

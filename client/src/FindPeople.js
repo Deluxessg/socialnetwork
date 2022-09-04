@@ -32,22 +32,30 @@ export default function FindPeople() {
 
     return (
         <section className="find-people">
-            <h2>Find People</h2>
+            {/* <h2>Find People</h2> */}
             <section className="recent-users">
                 <h3>Who is new?</h3>
                 <ul>
                     {recentUsers.map((user) => (
                         <li key={user.id}>
-                            <Link to={"/users/" + user.id}>
+                            <Link
+                                className="people-text"
+                                to={"/users/" + user.id}
+                            >
+                                <img
+                                    className="people-img"
+                                    src={user.profile_picture_url}
+                                ></img>
                                 {user.first_name} {user.last_name}
-                                <img src={user.profile_picture_url}></img>
                             </Link>
                         </li>
                     ))}
                 </ul>
             </section>
             <section className="search-results">
-                <h3>Looking for someone in particular?</h3>
+                <h3 className="padding-h3">
+                    Looking for someone in particular?
+                </h3>
                 <p>
                     <input
                         defaultValue={searchTerm}
@@ -58,8 +66,13 @@ export default function FindPeople() {
                 <ul>
                     {searchResults.map((user) => (
                         <li key={user.id}>
-                            {user.first_name} {user.last_name}
-                            <img src={user.profile_picture_url}></img>
+                            <Link
+                                className="people-text"
+                                to={"/users/" + user.id}
+                            >
+                                <img src={user.profile_picture_url}></img>
+                                {user.first_name} {user.last_name}
+                            </Link>
                         </li>
                     ))}
                 </ul>

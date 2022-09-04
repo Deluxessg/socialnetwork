@@ -339,6 +339,11 @@ app.post("/api/delete-account", async (request, response) => {
     }
 });
 
+app.post("/api/logout", (request, response) => {
+    request.session = null;
+    response.redirect("/api/login");
+});
+
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });

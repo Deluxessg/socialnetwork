@@ -51,9 +51,8 @@ export default class LoginForm extends Component {
                         type="password"
                         placeholder="password"
                     />
-                    <button>Login</button>
+                    <button className="login-btn">Login</button>
                 </form>
-                <Link to="/reset">Reset your password</Link>
             </div>
         );
     }

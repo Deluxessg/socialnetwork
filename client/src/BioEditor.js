@@ -51,7 +51,9 @@ export default class Bio extends Component {
                 {this.props.user.bio && (
                     <div>
                         <p className="bio-text">{this.props.user.bio}</p>
-                        <button onClick={this.toggleEditor}>Edit</button>
+                        <button className="bio-btn" onClick={this.toggleEditor}>
+                            Edit
+                        </button>
                     </div>
                 )}
                 {!this.props.user.bio && (
@@ -64,7 +66,7 @@ export default class Bio extends Component {
                             defaultValue={this.props.user.bio}
                             onInput={this.updateDefaultBio}
                         ></textarea>
-                        <button>Submit</button>
+                        <button className="bio-btn">Submit</button>
                     </form>
                 )}
             </div>

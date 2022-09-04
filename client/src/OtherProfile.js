@@ -25,11 +25,14 @@ export default function OtherProfile() {
         <div className="other-profile">
             <div key={user.id}>
                 <img src={user.profile_picture_url} />
-                <h4>
+                <h3>
                     {user.first_name} {user.last_name}
-                </h4>
+                </h3>
                 <p>{user.bio}</p>
-                <FriendshipButton otherUserId={user_id} />
+                <FriendshipButton
+                    className="friend-btn"
+                    otherUserId={user_id}
+                />
             </div>
         </div>
     );
