@@ -60,7 +60,7 @@ export default class App extends Component {
             .then((response) => response.json())
             .then((result) => {
                 console.log(result);
-                window.location = "/";
+                window.location.href = "/";
             });
     }
 

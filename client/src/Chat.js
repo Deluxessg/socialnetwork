@@ -63,29 +63,36 @@ export default function Chat() {
     }
 
     return (
-        <section className="chat">
-            <h2>Chat</h2>
-            <ul className="messages">
-                {chatMessages.map((x) => (
-                    <li ref={lastMessageRef} key={x.id}>
-                        <img className="chat-img" src={x.profile_picture_url} />
-                        <strong>{x.first_name}</strong>
-                        {"  "}
-                        <strong>{x.last_name} </strong>
-                        {formatDate(x.created_at)}
-                        <p>{x.message}</p>
-                    </li>
-                ))}
-            </ul>
-            <form onSubmit={onSubmit}>
-                <textarea
-                    name="message"
-                    rows={1}
-                    placeholder="Write your message..."
-                    required
-                ></textarea>
-                <button className="bio-btn">Send</button>
-            </form>
+        <section className="chat-section">
+            <h2>Chat Wall</h2>
+            <div className="chat">
+                <ul className="messages">
+                    {chatMessages.map((x) => (
+                        <li ref={lastMessageRef} key={x.id}>
+                            <img
+                                className="chat-img"
+                                src={x.profile_picture_url}
+                            />
+                            <strong>{x.first_name}</strong>
+                            {"  "}
+                            <strong>{x.last_name} </strong>
+                            {formatDate(x.created_at)}
+                            <p>{x.message}</p>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+            <div className="textarea-chat">
+                <form onSubmit={onSubmit}>
+                    <textarea
+                        name="message"
+                        rows={1}
+                        placeholder="Write your message..."
+                        required
+                    ></textarea>
+                    <button className="bio-btn">Send</button>
+                </form>
+            </div>
         </section>
     );
 }
